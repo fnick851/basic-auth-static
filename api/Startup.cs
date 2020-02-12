@@ -14,6 +14,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authentication;
+using WebApi.Helpers;
 
 namespace api
 {
@@ -30,6 +31,10 @@ namespace api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            // configure basic authentication 
+            services.AddAuthentication("BasicAuthentication")
+                .AddScheme<AuthenticationSchemeOptions, BasicAuthHandler>("BasicAuthentication", null);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,8 +55,8 @@ namespace api
 
             app.UseHttpsRedirection();
 
-            //app.UseAuthentication();
-            //app.UseAuthorization();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
@@ -59,8 +64,8 @@ namespace api
                 endpoints.MapFallbackToController("Index", "SpaFallback");
             });
 
-            app.UseDefaultFiles();
             app.UseStaticFiles();
+            app.UseDefaultFiles();
         }
     }
 }
