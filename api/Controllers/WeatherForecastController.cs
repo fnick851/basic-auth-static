@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace basic_auth_static.Controllers
+namespace api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -24,7 +24,7 @@ namespace basic_auth_static.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> GetSummaries()
+        public IEnumerable<WeatherForecast> Get()
         {
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast

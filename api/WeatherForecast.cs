@@ -1,6 +1,6 @@
 using System;
 
-namespace basic_auth_static
+namespace api
 {
     public class WeatherForecast
     {
