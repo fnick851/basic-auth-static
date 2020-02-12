@@ -1,9 +1,12 @@
 import axios from "axios";
-import localPort from "@/local-port.js";
 
 export default axios.create({
+  auth: {
+    username: "validuser",
+    password: "password"
+  },
   baseURL:
-    window.location.hostname === "localhost"
-      ? `https://localhost:${localPort}`
+    process.env.NODE_ENV === "development"
+      ? `https://localhost:${process.env.VUE_APP_PORT}`
       : "/"
 });

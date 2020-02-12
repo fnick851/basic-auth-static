@@ -16,8 +16,7 @@ namespace WebApi.Helpers
             IOptionsMonitor<AuthenticationSchemeOptions> options,
             ILoggerFactory logger,
             UrlEncoder encoder,
-            ISystemClock clock)
-            : base(options, logger, encoder, clock) {}
+            ISystemClock clock) : base(options, logger, encoder, clock) { }
 
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
@@ -30,15 +29,17 @@ namespace WebApi.Helpers
 
             try
             {
-                var authHeader =  AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
+                var authHeader = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
                 var credentialBytes = Convert.FromBase64String(authHeader.Parameter);
                 var credentials = Encoding.UTF8.GetString(credentialBytes).Split(new[] { ':' }, 2);
                 var username = credentials[0];
                 var password = credentials[1];
-                if (username == "validuser" && password == "password")
+
+                var isValid = await Task.FromResult(username == "validuser" && password == "password"); // bypass async method warning
+                if (isValid)
                 {
                     var claims = new[] {
-                        new Claim(ClaimTypes.Name, username),
+                        new Claim (ClaimTypes.Name, username),
                     };
                     var identity = new ClaimsIdentity(claims, Scheme.Name);
                     var principal = new ClaimsPrincipal(identity);
