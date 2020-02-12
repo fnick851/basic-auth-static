@@ -15,7 +15,8 @@
 </template>
 
 <script>
-import axios from "axios";
+import http from "@/http.js";
+
 export default {
   name: "Weather",
   data() {
@@ -24,7 +25,7 @@ export default {
     };
   },
   async created() {
-    const weathers = await axios.get("https://localhost:5001/WeatherForecast");
+    const weathers = await http.get("WeatherForecast");
     this.weathers = weathers.data;
   }
 };

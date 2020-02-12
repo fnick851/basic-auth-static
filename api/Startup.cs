@@ -50,7 +50,8 @@ namespace api
 
             app.UseHttpsRedirection();
 
-            // app.UseAuthorization();
+            //app.UseAuthentication();
+            //app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
